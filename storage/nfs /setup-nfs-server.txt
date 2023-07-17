@@ -1,0 +1,99 @@
+
+
+
+###    Install OS packages
+sudo apt-get update
+sudo apt-get install nfs-common nfs-kernel-server -y
+
+
+###    Create directory to export
+sudo mkdir -p /data/nfs1
+sudo chown nobody:nogroup /data/nfs1
+sudo chmod g+rwxs /data/nfs1
+
+###     Export Directory
+
+# limit access to clients in 192.168/16 network
+echo -e "/data/nfs1\t192.168.0.0/16(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
+
+sudo exportfs -av (in nfs server for checking )
+#/data/nfs1 192.168.0.0/16
+
+###         Restart NFS service
+
+
+# restart and show logs
+sudo systemctl restart nfs-kernel-server
+sudo systemctl status nfs-kernel-server
+
+###    Show export details
+
+# show for localhost
+# /sbin/showmount -e localhost (in server for check)
+# Export list for 127.0.0.1:
+# /data/nfs1 192.168.0.0/16
+
+# show for default public IP of host (in server for check)
+# /sbin/showmount -e 192.168.2.239
+# Export list for 192.168.2.239: 
+# /data/nfs1 192.168.0.0/16
+
+
+###      Prerequisite, NFS client package on K8s nodes
+
+
+# on Debian/Ubuntu based nodes
+#sudo apt update
+#sudo apt install nfs-common -y
+
+# on RHEL based nodes
+# sudo yum install nfs-utils -y
+
+
+# use default public IP of host (in client for check server)
+$ /sbin/showmount -e 192.168.2.239 
+Export list for 192.168.2.239: 
+/data/nfs1 192.168.0.0/16
+
+######  for provisioning :
+
+###   Prerequisite, install helm3
+
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+sudo apt-get install apt-transport-https --yes
+echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
+
+###    Install helm repo
+
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+
+"nfs-subdir-external-provisioner" has been added to your repositories
+
+helm repo list
+NAME                           	URL                                                              
+nfs-subdir-external-provisioner	https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+
+###   Install helm chart for NFS
+
+$ helm install nfs-subdir-external-provisioner \
+nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+--set nfs.server=192.168.2.239 \
+--set nfs.path=/data/nfs1 \
+--set storageClass.onDelete=true
+
+NAME: nfs-subdir-external-provisioner
+LAST DEPLOYED: Tue Jan 11 16:58:16 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+$ kubectl get storageclass nfs-client
+NAME         PROVISIONER                                     RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+nfs-client   cluster.local/nfs-subdir-external-provisioner   Delete          Immediate           true                   7s
+
+
+
+

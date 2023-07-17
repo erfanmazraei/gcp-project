@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: api-web-src-media
-  namespace: wodio
+  namespace: namespace
 spec:
   accessModes:
     - ReadWriteMany

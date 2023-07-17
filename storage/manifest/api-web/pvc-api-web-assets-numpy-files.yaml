@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 metadata:
   name: api-web-assets-numpy-files 
-  namespace: wodio
+  namespace: namespace
 spec:
   accessModes:
     - ReadWriteMany
