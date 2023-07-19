@@ -1,0 +1,14 @@
+########################################################################
+problem :
+
+I'm trying to create a new GPU instance in GCP but I keep getting the following error: 
+A n1-standard-1 VM instance is currently unavailable in the us-central1-a zone. Alternatively, you can try your request again with a different VM hardware configuration or at a later time. For more information, see the troubleshooting documentation.
+
+how i solved :
+
+
+use this command for check what type of vm is available : $ gcloud compute machine-types list --filter="us-central1-a"
+
+then you can see list of type vm that are available in us-central1-a and you can change type of your vm to this (:
+ #######################################################################
+ 
