@@ -11,4 +11,12 @@ use this command for check what type of vm is available : $ gcloud compute machi
 
 then you can see list of type vm that are available in us-central1-a and you can change type of your vm to this (:
  #######################################################################
+
+ probblem :
+ i need read write mane pvc in GCP but gcp doesnt this feature :
+
+ how i solved :
+ i setup nfs server that you can see all command in storage/nfs directory 
+
+ #######################################################################
  
