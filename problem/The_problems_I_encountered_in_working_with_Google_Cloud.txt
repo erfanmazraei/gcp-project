@@ -13,10 +13,10 @@ then you can see list of type vm that are available in us-central1-a and you can
  #######################################################################
 
  probblem :
- i need read write mane pvc in GCP but gcp doesnt this feature :
+ i need read write many pvc in GCP but gcp doesnt this feature :
 
  how i solved :
  i setup nfs server that you can see all command in storage/nfs directory 
 
  #######################################################################
- 
+
