@@ -1,0 +1,30 @@
+put work-flow-file.yaml in .github/workflows directory
+
+what is secrets.GKE_CREDENTIAL_MAIN ?
+
+Create gcp credential and save as vale in secret that key is : GKE_CREDENTIAL_MAIN (how ? :)
+
+# in cloud shell :
+
+$ gcloud iam service-accounts create gcpcmdlineuser
+
+# see email :
+
+$ gcloud iam service-accounts list --filter gcpcmdlineuser
+
+# and then :
+
+# set permission for this account (in cloud shell ) : 
+
+$ gcloud projects add-iam-policy-binding $PROJECT_NAME --member=serviceAccount:$EMAIL --role=roles/container.admin
+$ gcloud projects add-iam-policy-binding $PROJECT_NAME --member=serviceAccount:$EMAIL --role=roles/container.clusterViewer
+$ gcloud projects add-iam-policy-binding $PROJECT_NAME --member=serviceAccount:$EMAIL --role=roles/storage.admin
+$ gcloud projects add-iam-policy-binding $PROJECT_NAME --member=serviceAccount:$EMAIL --role=roles/containerregistry.ServiceAgent
+
+# then for get output json :
+$ gcloud iam service-accounts keys create key.json --iam-account=$EMAIL
+
+# then put , output of key.json for value in : github.secret >> GKE_CREDENTIAL_MAIN
+
+
+# https://faun.pub/building-ci-cd-pipeline-with-github-action-63082aa0bd1d
