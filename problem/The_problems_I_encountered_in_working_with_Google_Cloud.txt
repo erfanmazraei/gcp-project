@@ -21,11 +21,11 @@ then you can see list of type vm that are available in us-central1-a and you can
  #######################################################################
 
 problem :
- we use vertex in which enpoint that in specific vpc , and k8s can connect to it 
+ we use vertex in which enpoint that in specific vpc , and k8s cant connect to it 
 
 
  how i solved : 
- 1 . set full access api for K8s
+ 1 . set full access api for K8s ( k8s must be in vpc that vertex use it )
  2 . set vertex and storage acess for service account that k8s use it
  
  ########################################################################
