@@ -12,7 +12,7 @@ use this command for check what type of vm is available : $ gcloud compute machi
 then you can see list of type vm that are available in us-central1-a and you can change type of your vm to this (:
  #######################################################################
 
- probblem :
+ problem :
  i need read write many pvc in GCP but gcp doesnt this feature :
 
  how i solved :
@@ -20,3 +20,12 @@ then you can see list of type vm that are available in us-central1-a and you can
 
  #######################################################################
 
+problem :
+ we use vertex in which enpoint that in specific vpc , and k8s can connect to it 
+
+
+ how i solved : 
+ 1 . set full access api for K8s
+ 2 . set vertex and storage acess for service account that k8s use it
+ 
+ ########################################################################
