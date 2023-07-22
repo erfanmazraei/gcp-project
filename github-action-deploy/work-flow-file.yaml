@@ -6,8 +6,8 @@ on:
 ##########
 env:
   PROJECT_ID: projectid
-  GKE_CLUSTER: cluster-1
-  GKE_ZONE: us-central1-c
+  GKE_CLUSTER: cluster
+  GKE_ZONE: us-central1-p
   API_WEB_IMAGE: api-web-image
 
 
