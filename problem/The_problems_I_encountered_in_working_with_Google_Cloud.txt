@@ -30,6 +30,8 @@ problem :
  
  ########################################################################
 
+#kubernetes
+
 problem :
 
     i delete pod , but when execute "kubectl -n namespace get pod" i see terminated pod in list 
