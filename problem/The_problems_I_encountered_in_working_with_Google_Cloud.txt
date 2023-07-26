@@ -29,3 +29,11 @@ problem :
  2 . set vertex and storage acess for service account that k8s use it
  
  ########################################################################
+
+problem :
+
+    i delete pod , but when execute "kubectl -n namespace get pod" i see terminated pod in list 
+
+how i solved :
+
+    kubectl delete pod <PODNAME> --grace-period=0 --force --namespace <NAMESPACE>
