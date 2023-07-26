@@ -37,3 +37,5 @@ problem :
 how i solved :
 
     kubectl delete pod <PODNAME> --grace-period=0 --force --namespace <NAMESPACE>
+
+#########################################################################
