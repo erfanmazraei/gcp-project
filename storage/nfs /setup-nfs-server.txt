@@ -16,6 +16,8 @@ sudo chmod g+rwxs /data/nfs1
 # limit access to clients in 192.168/16 network
 echo -e "/data/nfs1\t192.168.0.0/16(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
 
+# you can edit /etc/exports in nfs server and then use this command for apply your change : exportfs -ra
+
 sudo exportfs -av (in nfs server for checking )
 #/data/nfs1 192.168.0.0/16
 
@@ -93,7 +95,6 @@ TEST SUITE: None
 $ kubectl get storageclass nfs-client
 NAME         PROVISIONER                                     RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 nfs-client   cluster.local/nfs-subdir-external-provisioner   Delete          Immediate           true                   7s
-
 
 
 
