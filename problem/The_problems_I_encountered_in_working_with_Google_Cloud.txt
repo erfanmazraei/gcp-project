@@ -41,3 +41,14 @@ how i solved :
     kubectl delete pod <PODNAME> --grace-period=0 --force --namespace <NAMESPACE>
 
 #########################################################################
+
+problem :
+    i see this error in github action after push branch :
+        Kubernetes Engine API has not been used in project 875374352674 before or it is disabled. 
+        Enable it by visiting https://console.developers.google.com/apis/api/container.googleapis.com/overview?project=875374352674 then retry. 
+        If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry
+
+how i solved :
+    i enable Kubernetes Engine API
+
+#############################################################################
