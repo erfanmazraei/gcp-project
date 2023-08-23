@@ -1,0 +1,27 @@
+
+step 1 :
+    set permission :
+        kubectl create clusterrolebinding cluster-admin-binding \
+        --clusterrole cluster-admin \
+        --user $(gcloud config get-value account)
+
+step 2 :
+    apply nginx-ingress :
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+
+step 3 :
+    apply cert-manager :
+        kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.7.2/cert-manager.yaml
+
+step 4 :
+    apply clusterissuer :
+        kubectl apply -f clusterissuer.yaml
+
+step 5 :
+    apply sample ingress :
+        # you must set this ip to domain dns (this ip : kubectl -n nginx-ingress get svc ( external ip ) )
+
+        kubectl apply -f sample-ingress.yaml
+
+        # is certificate not ok , firstly try it without tls that check nginx-ingress is ok or not 
+        
