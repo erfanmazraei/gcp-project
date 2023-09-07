@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: namespace
+  labels:
+    io.wodio.service: api-web-deployment
+  name: api-web-deployment
+spec:
+  replicas: 2
+  revisionHistoryLimit: 15
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  selector:
+    matchLabels:
+      io.wodio.service: api-web
+  template:
+    metadata:
+      labels:
+        io.wodio.service: api-web
+    spec:
+      containers:
+      - name: api-web-image
+        image: gcr.io/PROJECT_ID/API_WEB_IMAGE:TAG
+        resources:
+          limits:
+            memory: 800Mi
+            cpu: 30000m
+          requests:
+            memory: 5Mi
+            cpu: 300m
+        imagePullPolicy: "IfNotPresent"
+        args:
+          - sh
+          - -c
+        ports:
+          - containerPort: 8000
+        startupProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 180
+          periodSeconds: 10
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 2
+        livenessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 2
+        readinessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 4
+          successThreshold: 3
+        env:
+          - name: name
+            value: "value"
+          - name: name
+            value: "value"
+        
+        volumeMounts:
+          - mountPath: /assets/numpy_files/
+            name: api-web-assets-numpy-files-pvc
+          - mountPath: /src/media/
+            name: api-web-src-media-pvc
+      restartPolicy: Always
+      volumes:
+        - name: api-web-assets-numpy-files-pvc
+          persistentVolumeClaim:
+            claimName: api-web-assets-numpy-files
+        - name: api-web-src-media-pvc
+          persistentVolumeClaim:
+            claimName: api-web-src-media
